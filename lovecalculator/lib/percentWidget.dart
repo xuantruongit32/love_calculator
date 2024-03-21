@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class PercentWidget extends StatefulWidget {
@@ -15,6 +16,8 @@ class _PercentWidgetState extends State<PercentWidget> {
   Widget build(BuildContext context) {
     return Center(
       child: CircularPercentIndicator(
+        progressColor: Colors.pink,
+        backgroundColor: Colors.pink.shade100,
         radius: 100,
         lineWidth: 10,
         percent: widget.percent,
@@ -23,7 +26,7 @@ class _PercentWidgetState extends State<PercentWidget> {
         center: Text(
           percent2.toInt().toString() + '%',
           style: const TextStyle(
-            fontSize: 25,
+            fontSize: 36,
             fontWeight: FontWeight.bold,
           ),
         ),
