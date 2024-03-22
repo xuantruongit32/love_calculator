@@ -6,6 +6,20 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
+    bool _checkTrueLove(String fname, String sname) {
+      if ((fname == 'Truong' || fname == 'Hoang Truong' || fname == 'Hoang Xuan Truong') &&
+          (sname == 'Anh' ||
+              sname == 'Ngoc Anh' ||
+              sname == 'Hoang Ngoc Anh' ||
+              sname == 'Hoang Thanh Thuy' ||
+              sname == 'Hoang Thuy' ||
+              sname == 'Thanh Thuy' ||
+              sname == 'Thuy')) {
+        return true;
+      }
+      return false;
+    }
+
     final TextEditingController _maleController = TextEditingController();
     final TextEditingController _femaleController = TextEditingController();
     return Row(
