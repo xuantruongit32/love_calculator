@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:lovecalculator/models/love.dart';
@@ -12,13 +11,7 @@ class NetworkRequest {
     'X-RapidAPI-Host': 'love-calculator.p.rapidapi.com'
   };
 
-  List<Love> parseLove(String responseBody) {
-    var list = json.decode(responseBody) as List<dynamic>;
-    List<Love> loveList = list.map((e) => Love.fromJson(e)).toList();
-    return loveList;
-  }
-
-  Future<List<Love>> fetchLove({Map<String, String>? params}) async {
+  Future<Love> fetchLove({Map<String, String>? params}) async {
     String queryString = Uri(queryParameters: params).query;
     String updateUrl = url + (queryString.isEmpty ? '' : '?$queryString');
     final response = await http.get(
@@ -26,7 +19,7 @@ class NetworkRequest {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      return compute(parseLove, response.body);
+      return Love.fromJson(jsonDecode(response.body));
     } else if (response.statusCode == 404) {
       throw Exception('Not found');
     } else {
