@@ -9,14 +9,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _checkTrueLove(String fname, String sname) {
-      if ((fname == 'Truong' || fname == 'Hoang Truong' || fname == 'Hoang Xuan Truong') &&
-          (sname == 'Anh' ||
-              sname == 'Ngoc Anh' ||
-              sname == 'Hoang Ngoc Anh' ||
+      if ((fname == 'Hoàng Xuân Trường' ||
+              fname == 'Hoàng Thanh Thúy' ||
+              fname == 'Hoàng Ngọc Ánh' ||
+              fname == 'Hoang Thanh Thuy' ||
+              fname == 'Hoang Ngoc Anh') &&
+          (sname == 'Hoàng Xuân Trường' ||
+              sname == 'Hoàng Thanh Thúy' ||
+              sname == 'Hoàng Ngọc Ánh' ||
               sname == 'Hoang Thanh Thuy' ||
-              sname == 'Hoang Thuy' ||
-              sname == 'Thanh Thuy' ||
-              sname == 'Thuy')) {
+              sname == 'Hoang Ngoc Anh')) {
         return true;
       }
       return false;
@@ -80,55 +82,57 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      const VerticalDivider(
-                        color: Colors.white,
-                        indent: 70,
-                        endIndent: 70,
-                      ),
-                      const Icon(Icons.heart_broken),
-                      const VerticalDivider(
-                        color: Colors.white,
-                        indent: 50,
-                        endIndent: 50,
-                        thickness: 5,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          NetworkRequest().fetchLove(params: {
-                            'fname': _femaleController.text,
-                            'sname': _maleController.text,
-                          }).then(
-                            (value) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ResultPage(
-                                      love: _checkTrueLove(_femaleController.text, _maleController.text)
-                                          ? trueLove
-                                          : value),
-                                )),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.pink),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                        child: const Text(
-                          'CALCULATE LOVE %',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                Column(
+                  children: [
+                    const VerticalDivider(
+                      color: Colors.white,
+                      indent: 70,
+                      endIndent: 70,
+                    ),
+                    const Icon(
+                      Icons.favorite,
+                      color: Colors.pink,
+                      size: 50,
+                    ),
+                    const VerticalDivider(
+                      color: Colors.white,
+                      indent: 50,
+                      endIndent: 50,
+                      thickness: 5,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        NetworkRequest().fetchLove(params: {
+                          'fname': _femaleController.text,
+                          'sname': _maleController.text,
+                        }).then(
+                          (value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResultPage(
+                                    love: _checkTrueLove(_femaleController.text, _maleController.text)
+                                        ? trueLove
+                                        : value),
+                              )),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.pink),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                      child: const Text(
+                        'CALCULATE LOVE %',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Expanded(
                   child: Padding(
