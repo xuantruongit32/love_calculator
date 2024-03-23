@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:lovecalculator/models/love.dart';
-import 'package:lovecalculator/percentWidget.dart';
+import 'package:love_calculator/models/love.dart';
+import 'package:love_calculator/percentWidget.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({super.key, required this.love});
@@ -46,10 +46,14 @@ class ResultPage extends StatelessWidget {
                     ),
                     const Gap(140),
                     const VerticalDivider(),
-                    Text(
-                      love.result!,
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic,
+                    const Gap(60),
+                    Flexible(
+                      child: Text(
+                        love.result!,
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 24,
+                        ),
                       ),
                     ),
                   ],

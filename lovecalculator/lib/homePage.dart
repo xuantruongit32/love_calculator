@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:lovecalculator/models/love.dart';
-import 'package:lovecalculator/network/network_request.dart';
-import 'package:lovecalculator/resultPage.dart';
+import 'package:love_calculator/models/love.dart';
+import 'package:love_calculator/network/network_request.dart';
+import 'package:love_calculator/resultPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
       fname: '🦴🐟',
       sname: '😛',
       percentage: 99.99.toStringAsFixed(4),
-      result: 'Duyên là do trời định, phận là do anh tạo.',
+      result: 'Duyên là do trời định, phận là do anh tạo. Love you 3000 <3',
     );
 
     final TextEditingController _maleController = TextEditingController();

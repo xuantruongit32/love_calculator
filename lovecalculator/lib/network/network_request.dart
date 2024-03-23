@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-import 'package:lovecalculator/models/love.dart';
+import 'package:love_calculator/models/love.dart';
 
 class NetworkRequest {
   static const url = 'https://love-calculator.p.rapidapi.com/getPercentage';

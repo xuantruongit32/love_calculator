@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lovecalculator/homePage.dart';
+import 'package:love_calculator/homePage.dart';
 
 void main() {
   runApp(const MyApp());
