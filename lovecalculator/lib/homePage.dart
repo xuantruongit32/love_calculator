@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:lovecalculator/percentWidget.dart';
+import 'package:lovecalculator/models/love.dart';
+import 'package:lovecalculator/network/network_request.dart';
+import 'package:lovecalculator/resultPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,125 +22,150 @@ class HomePage extends StatelessWidget {
       return false;
     }
 
+    final trueLove = Love(
+      fname: '🦴🐟',
+      sname: '😛',
+      percentage: 99.99.toStringAsFixed(4),
+      result: 'Duyên là do trời định, phận là do anh tạo.',
+    );
+
     final TextEditingController _maleController = TextEditingController();
     final TextEditingController _femaleController = TextEditingController();
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const Gap(80),
-                const Center(
-                  child: Text(
-                    'YOUR NAME',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                const Gap(10),
-                Container(
-                  padding: const EdgeInsets.only(
-                    left: 12,
-                    right: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: TextField(
-                    controller: _maleController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter Your Name',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              const VerticalDivider(
-                color: Colors.white,
-                indent: 70,
-                endIndent: 70,
-              ),
-              const Icon(Icons.heart_broken),
-              const VerticalDivider(
-                color: Colors.white,
-                indent: 50,
-                endIndent: 50,
-                thickness: 5,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PercentWidget(percent: 0.5),
+            width: double.infinity - 30,
+            height: 370,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const Gap(80),
+                        const Center(
+                          child: Text(
+                            'YOUR NAME',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                        const Gap(10),
+                        Container(
+                          padding: const EdgeInsets.only(
+                            left: 12,
+                            right: 12,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: TextField(
+                            controller: _maleController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter Your Name',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.green),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(
-                        color: Colors.greenAccent,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      const VerticalDivider(
+                        color: Colors.white,
+                        indent: 70,
+                        endIndent: 70,
                       ),
+                      const Icon(Icons.heart_broken),
+                      const VerticalDivider(
+                        color: Colors.white,
+                        indent: 50,
+                        endIndent: 50,
+                        thickness: 5,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          NetworkRequest().fetchLove(params: {
+                            'fname': _femaleController.text,
+                            'sname': _maleController.text,
+                          }).then(
+                            (value) => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ResultPage(
+                                      love: _checkTrueLove(_femaleController.text, _maleController.text)
+                                          ? trueLove
+                                          : value),
+                                )),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.pink),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        child: const Text(
+                          'CALCULATE LOVE %',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const Gap(80),
+                        const Center(
+                          child: Text(
+                            'PARTNER\'S NAME',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                        const Gap(10),
+                        Container(
+                          padding: const EdgeInsets.only(right: 12, left: 12),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: TextField(
+                            controller: _femaleController,
+                            decoration: const InputDecoration(hintText: 'Enter Partner\'s Name'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                child: const Text(
-                  'CALCULATE LOVE %',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const Gap(80),
-                const Center(
-                  child: Text(
-                    'PARTNER\'S NAME',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                const Gap(10),
-                Container(
-                  padding: const EdgeInsets.only(right: 12, left: 12),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: TextField(
-                    controller: _femaleController,
-                    decoration: const InputDecoration(hintText: 'Enter Partner\'S Name'),
                   ),
                 ),
               ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

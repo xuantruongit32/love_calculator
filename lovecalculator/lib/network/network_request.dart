@@ -11,19 +11,28 @@ class NetworkRequest {
     'X-RapidAPI-Host': 'love-calculator.p.rapidapi.com'
   };
 
-  Future<Love> fetchLove({Map<String, String>? params}) async {
-    String queryString = Uri(queryParameters: params).query;
-    String updateUrl = url + (queryString.isEmpty ? '' : '?$queryString');
-    final response = await http.get(
-      Uri.parse(updateUrl),
-      headers: headers,
-    );
-    if (response.statusCode == 200) {
-      return Love.fromJson(jsonDecode(response.body));
-    } else if (response.statusCode == 404) {
-      throw Exception('Not found');
-    } else {
-      throw Exception('Cannot get');
+  Future<Love> fetchLove({required Map<String, String>? params}) async {
+    try {
+      String queryString = Uri(queryParameters: params).query;
+      String updateUrl = url + (queryString.isEmpty ? '' : '?$queryString');
+      print(updateUrl);
+      print(updateUrl);
+      print(updateUrl);
+      print(updateUrl);
+      print(updateUrl);
+      final response = await http.get(
+        Uri.parse(updateUrl),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        return Love.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 404) {
+        throw Exception('Not found');
+      } else {
+        throw Exception('Unexpected status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error during HTTP request: $e');
     }
   }
 }
